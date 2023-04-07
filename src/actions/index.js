@@ -23,3 +23,19 @@ export const heroDeleting = (id, heroes) => {
         payload: heroes.filter(item => item.id !== id)
     }
 }
+
+export const heroAdd = (heroes, hero) => {
+    return {
+        type: 'HERO_ADD',
+        payload: [...heroes, hero]
+    }
+}
+
+export const heroFilter = (filter) => {
+    return {
+        type: 'HERO_FILTER',
+        payload: filter ? filter : 'all'
+    }
+}
+
+

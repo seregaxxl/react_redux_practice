@@ -10,6 +10,7 @@ const App = () => {
         <main className="app">
             <div className="content">
                 <HeroesList/>
+                
                 <div className="content__interactive">
                     <HeroesAddForm/>
                     <HeroesFilters/>

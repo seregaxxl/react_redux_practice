@@ -1,17 +1,42 @@
 {
   "heroes": [
     {
-      "id": 3,
-      "name": "Морской герой",
-      "description": "Как аквамен, но не из DC",
-      "element": "water"
+      "name": "Aquawoman",
+      "text": "Like aquaman, but aquawoman",
+      "element": "water",
+      "id": 1
+    },
+    {
+      "name": "Fireman",
+      "text": "Antagonist to usual firmen",
+      "element": "fire",
+      "id": 2
+    },
+    {
+      "name": "Mood",
+      "text": "Like grood, but mood",
+      "element": "earth",
+      "id": 3
+    },
+    {
+      "name": "Robkiy",
+      "text": "Wants to fight the wind",
+      "element": "wind",
+      "id": 4
     }
   ],
-  "filters": [
-    "all",
-    "fire",
-    "water",
-    "wind",
-    "earth"
-  ]
+  "filters": {
+    "all": "Все",
+    "fire": "Огонь",
+    "water": "Вода",
+    "wind": "Ветер",
+    "earth": "Земля"
+  },
+  "buttons": {
+    "btn-outline-dark": "Все",
+    "btn-danger": "Огонь",
+    "btn-primary": "Вода",
+    "btn-success": "Ветер",
+    "btn-secondary": "Земля"
+  }
 }

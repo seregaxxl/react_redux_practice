@@ -2,8 +2,8 @@ import './heroesListItem.scss'
 import { useSelector, useDispatch } from 'react-redux';
 import { heroDeleting } from '../../actions';
 
-const HeroesListItem = ({name, description, element, id}) => {
-    const {heroes} = useSelector(state => state);
+const HeroesListItem = ({name, text, element, id}) => {
+    const {heroes} = useSelector(state => state.heroes);
     const dispatch = useDispatch();
     const deleteItem = async (id, heroes) => {
         try {
@@ -48,7 +48,7 @@ const HeroesListItem = ({name, description, element, id}) => {
             <div className="card-body">
                 
                 <h3 className="card-title">{name}</h3>
-                <p className="card-text">{description}</p>
+                <p className="card-text">{text}</p>
             </div>
             <span className="position-absolute top-0 start-100 translate-middle badge border rounded-pill bg-light">
                 <button onClick={() => {deleteItem(id, heroes)}} type="button" className="btn-close btn-close" aria-label="Close"></button>

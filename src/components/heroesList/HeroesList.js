@@ -2,6 +2,7 @@ import {useHttp} from '../../hooks/http.hook';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { CSSTransition } from 'react-transition-group';
+import { createSelector } from 'reselect';
 
 import { heroesFetching, heroesFetched, heroesFetchingError, heroesDeleting } from '../../actions';
 import HeroesListItem from "../heroesListItem/HeroesListItem";
@@ -13,8 +14,27 @@ import Spinner from '../spinner/Spinner';
 // Удаление идет и с json файла при помощи метода DELETE
 
 const HeroesList = () => {
+    const filteredHeroSelector = createSelector(
+        (state) => state.filters.filters,
+        (state) => state.heroes.heroes,
+        (filters, heroes) => {
+            if (filters === 'all') {
+                return heroes
+            } else {
+                return heroes.filter(item => item.element === filters)
+            }
+    })
+    const filteredHeroes = useSelector(filteredHeroSelector);
+    // const filteredHeroes = useSelector(state => {
+    //     if (state.filters.filters === 'all') {
+    //         return state.heroes.heroes
+    //     } else {
+    //         return state.heroes.heroes.filter(item => item.element === state.filters.filters)
+    //     }
+    // });
+
     const [show, setShow] = useState([]);
-    const {heroes, heroesLoadingStatus} = useSelector(state => state);
+    const {heroesLoadingStatus} = useSelector(state => state);
     const dispatch = useDispatch();
     const {request} = useHttp();
 
@@ -29,22 +49,22 @@ const HeroesList = () => {
     }, []);
 
     useEffect(() => {
-        setShow(heroes.map(() => false));
+        setShow(filteredHeroes.map(() => false));
         let timeoutIds = [];
-        heroes.forEach((_, i) => {
+        filteredHeroes.forEach((_, i) => {
             const timeoutId = setTimeout(() => {
                 setShow(show => {
                     const updatedShow = [...show];
                     updatedShow[i] = true;
                     return updatedShow;
                 });
-            }, 1000 * i);
+            }, 500 * i);
             timeoutIds.push(timeoutId);
         });
         return () => {
             timeoutIds.forEach(timeoutId => clearTimeout(timeoutId));
         };
-    }, [heroes]);
+    }, [filteredHeroes]);
 
     if (heroesLoadingStatus === "loading") {
         return <Spinner/>;
@@ -72,7 +92,7 @@ const HeroesList = () => {
         })
     }
 
-    const elements = renderHeroesList(heroes);
+    const elements = renderHeroesList(filteredHeroes);
     return (
         <ul>
             {elements}
