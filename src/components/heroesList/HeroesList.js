@@ -25,28 +25,13 @@ const HeroesList = () => {
             }
     })
     const filteredHeroes = useSelector(filteredHeroSelector);
-    // const filteredHeroes = useSelector(state => {
-    //     if (state.filters.filters === 'all') {
-    //         return state.heroes.heroes
-    //     } else {
-    //         return state.heroes.heroes.filter(item => item.element === state.filters.filters)
-    //     }
-    // });
 
     const [show, setShow] = useState([]);
     const {heroesLoadingStatus} = useSelector(state => state.heroes);
     const dispatch = useDispatch();
     const {request} = useHttp();
 
-    // useEffect(() => {
-    //     dispatch(heroesFetching);
-    //     request("http://localhost:3001/heroes")
-    //         .then(data => dispatch(heroesFetched(data)))
-    //         .catch(() => dispatch(heroesFetchingError()))
 
-        
-    //     // eslint-disable-next-line
-    // }, []);
 
     useEffect(() => {
         dispatch(fetchHeroes(request));

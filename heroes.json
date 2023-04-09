@@ -7,22 +7,22 @@
       "id": 1
     },
     {
-      "name": "Fireman",
-      "text": "Antagonist to usual firmen",
-      "element": "fire",
-      "id": 2
-    },
-    {
       "name": "Mood",
       "text": "Like grood, but mood",
       "element": "earth",
       "id": 3
     },
     {
-      "name": "Robkiy",
-      "text": "Wants to fight the wind",
-      "element": "wind",
+      "name": "Oki",
+      "text": "Koki and noki",
+      "element": "fire",
       "id": 4
+    },
+    {
+      "name": "Fireman",
+      "text": "Love dust and wind",
+      "element": "wind",
+      "id": 5
     }
   ],
   "filters": {

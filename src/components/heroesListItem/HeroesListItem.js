@@ -3,15 +3,14 @@ import { useSelector, useDispatch } from 'react-redux';
 import { heroDeleting } from '../../actions';
 
 const HeroesListItem = ({name, text, element, id}) => {
-    const {heroes} = useSelector(state => state.heroes);
     const dispatch = useDispatch();
-    const deleteItem = async (id, heroes) => {
+    const deleteItem = async (id) => {
         try {
           const response = await fetch(`http://localhost:3001/heroes/${id}`, {
             method: 'DELETE',
           });
           if (response.ok) {
-            dispatch(heroDeleting(id, heroes))
+            dispatch(heroDeleting(id))
           } else {
             alert('cannot be deleted')
           }
@@ -51,7 +50,7 @@ const HeroesListItem = ({name, text, element, id}) => {
                 <p className="card-text">{text}</p>
             </div>
             <span className="position-absolute top-0 start-100 translate-middle badge border rounded-pill bg-light">
-                <button onClick={() => {deleteItem(id, heroes)}} type="button" className="btn-close btn-close" aria-label="Close"></button>
+                <button onClick={() => {deleteItem(id)}} type="button" className="btn-close btn-close" aria-label="Close"></button>
             </span>
         </li>
     )

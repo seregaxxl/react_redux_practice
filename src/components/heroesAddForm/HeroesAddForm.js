@@ -46,7 +46,7 @@ const HeroesAddForm = () => {
         });
     }, []);
 
-    const addItem = async (heroes, hero) => {
+    const addItem = async (hero) => {
         try {
           const response = await fetch(`http://localhost:3001/heroes/`, {
             method: 'POST',
@@ -56,7 +56,7 @@ const HeroesAddForm = () => {
               body: JSON.stringify(hero)
           });
           if (response.ok) {
-            dispatch(heroAdd(heroes, hero))
+            dispatch(heroAdd(hero))
           } else {
             alert('cannot be added')
           }
@@ -74,7 +74,7 @@ const HeroesAddForm = () => {
           onSubmit={async (values) => {
             const hero = values
             hero.id = heroes[heroes.length - 1].id + 1
-            addItem(heroes, hero)
+            addItem(hero)
           }}
         >
             <Form className="border p-4 shadow-lg rounded">
