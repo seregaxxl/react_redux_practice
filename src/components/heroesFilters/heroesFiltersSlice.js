@@ -1,11 +1,18 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, createEntityAdapter } from "@reduxjs/toolkit";
 import {useHttp} from '../../hooks/http.hook';
 
-const initialState = {
-    filters: {},
+const filtersAdapter = createEntityAdapter();
+
+// const initialState = {
+//     filters: {},
+//     filtersLoadingStatus: 'idle',
+//     activeFilter: 'all'
+// }
+
+const initialState = filtersAdapter.getInitialState({
     filtersLoadingStatus: 'idle',
     activeFilter: 'all'
-}
+}) 
 
 export const fetchFilters = createAsyncThunk(
     'filters/Filters',
@@ -22,23 +29,20 @@ const filterSlice = createSlice({
         heroFilter: (state, action) => {
             state.activeFilter = action.payload;
         }
-        // ,
-        // filtersFetching: state => { state.filtersLoadingStatus = 'loading'},
-        // filtersFetched: (state, action) => {
-        //     state.filtersLoadingStatus = 'idle'
-        //     state.filters = action.payload
-        // },
-        // filterssFetchingError: state => {
-        //     state.filtersLoadingStatus = 'error'
-        // }
     },    
     extraReducers: (builder) => {
         builder
             .addCase(fetchFilters.pending,state => {
                 state.filtersLoadingStatus = 'loading'})
-            .addCase(fetchFilters.fulfilled,(state, action) => {
-                state.filtersLoadingStatus = 'idle'
-                state.filters = action.payload})
+            .addCase(
+                
+                // fetchFilters.fulfilled,(state, action) => {
+                // state.filtersLoadingStatus = 'idle'
+                // state.filters = action.payload}
+                
+                fetchFilters.fulfilled,(state, action) => {
+                    state.filtersLoadingStatus = 'idle';
+                    filtersAdapter.setAll(state, action.payload)})
             .addCase(fetchFilters.rejected, state => {
                 state.filtersLoadingStatus = 'error'})
             .addDefaultCase(()=>{})
@@ -48,4 +52,7 @@ const filterSlice = createSlice({
 const {actions, reducer} = filterSlice;
 
 export default reducer;
+
+export const {selectAll} = filtersAdapter.getSelectors(state => state.filters)
+
 export const {heroFilter, filtersFetched, filterssFetchingError, filtersFetching} = actions;

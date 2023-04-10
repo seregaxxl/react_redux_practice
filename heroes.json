@@ -25,26 +25,26 @@
       "id": 5
     }
   ],
-  "filters": {
-    "all": {
+  "filters": [
+    {"id":"all",
       "btn": "btn-outline-dark",
       "name": "Все"
     },
-    "fire": {
+    {"id":"fire",
       "btn": "btn-danger",
       "name": "Огонь"
     },
-    "water": {
+    {"id":"water",
       "btn": "btn-primary",
       "name": "Вода"
     },
-    "wind": {
+    { "id":"wind",
       "btn": "btn-success",
       "name": "Ветер"
     },
-    "earth": {
+    { "id":"earth",
       "btn": "btn-secondary",
       "name": "Земля"
     }
-  }
+  ]
 }

@@ -1,18 +1,18 @@
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { heroAdd } from '../heroesList/heroesSlice';
+import { selectAll } from '../heroesFilters/heroesFiltersSlice';
 import { Formik, Field, Form } from 'formik';
 import { useState, useEffect } from 'react';
+import { v4 as uuidv4 } from 'uuid';
+import store from '../../store';
 
 const HeroesAddForm = () => {
-    const {filters} = useSelector(state => state.filters);
-    const {heroes} = useSelector(state => state.heroes);
+    const filters = selectAll(store.getState());
     const dispatch = useDispatch();
     const [options, setOptions] = useState([]);
 
     useEffect(() => {
-        const values = Object.keys(filters);
-        const buttons = Object.values(filters);
-            setOptions(values.map((item, i) => i === 0 ? null : <option value={item}>{buttons[i].name}</option>))
+            setOptions(filters.map((item, i) => i === 0 ? null : <option value={item.id}>{item.name}</option>))
 
     }, [filters]);
 
@@ -43,7 +43,7 @@ const HeroesAddForm = () => {
           }}
           onSubmit={async (values) => {
             const hero = values
-            hero.id = heroes[heroes.length - 1].id + 1
+            hero.id = uuidv4();
             addItem(hero)
           }}
         >
