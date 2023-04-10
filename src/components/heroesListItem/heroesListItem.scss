@@ -1,24 +1,29 @@
-.card {
-    opacity: 1;
+// .hero {
+//   opacity: 0;
+// }
+.hero-enter {
+  opacity: 0;
+}
+.hero-appear {
+  opacity: 0;
+}
+.hero-enter-done {
+  opacity: 1;
+}
+.hero-appear-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+.hero-enter-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
 }
 
-.card-enter {
-        opacity: 0;
-        transform: scale(0.9);
-    }
-.card-enter-active {
-    opacity: 1;
-    transform: translateX(0);
-    transition: opacity 300ms, transform 300ms;
-  }
-  .card-exit {
-    opacity: 1;
-  }
-  .card-exit-active {
-    opacity: 0;
-    transform: scale(0.9);
-    transition: opacity 300ms, transform 300ms;
-  }
-  .card-enter-done {
-    opacity: 1;
-  }
+.hero-exit {
+  opacity: 1;
+}
+
+.hero-exit-active {
+  opacity: 0;
+  transition: opacity 500ms ease-in;
+}

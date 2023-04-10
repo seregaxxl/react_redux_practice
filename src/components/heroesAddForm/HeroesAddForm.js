@@ -3,48 +3,18 @@ import { heroAdd } from '../heroesList/heroesSlice';
 import { Formik, Field, Form } from 'formik';
 import { useState, useEffect } from 'react';
 
-// Задача для этого компонента:
-// Реализовать создание нового героя с введенными данными. Он должен попадать
-// в общее состояние и отображаться в списке + фильтроваться
-// Уникальный идентификатор персонажа можно сгенерировать через uiid
-// Усложненная задача:
-// Персонаж создается и в файле json при помощи метода POST
-// Дополнительно:
-// Элементы <option></option> желательно сформировать на базе
-// данных из фильтров
-
 const HeroesAddForm = () => {
+    const {filters} = useSelector(state => state.filters);
     const {heroes} = useSelector(state => state.heroes);
     const dispatch = useDispatch();
     const [options, setOptions] = useState([]);
 
     useEffect(() => {
-        const getFilters = async () => {
-            try {
-                const response = await fetch(`http://localhost:3001/filters/`, {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: null
-                });
-                if (!response.ok) {
-                    throw new Error(`Could not fetch http://localhost:3001/filters/, status: ${response.status}`);
-                }
+        const values = Object.keys(filters);
+        const buttons = Object.values(filters);
+            setOptions(values.map((item, i) => i === 0 ? null : <option value={item}>{buttons[i].name}</option>))
 
-                const data = await response.json();
-                return data
-            } catch (error) {
-                alert(error)
-            }
-        }
-        
-        getFilters().then(res => {
-            const texts = Object.values(res)
-            
-            setOptions(Object.keys(res).map((item, i) => i === 0 ? null : <option value={item}>{texts[i]}</option>))
-        });
-    }, []);
+    }, [filters]);
 
     const addItem = async (hero) => {
         try {
@@ -109,10 +79,6 @@ const HeroesAddForm = () => {
                         name="element">
                         <option >Я владею элементом...</option>
                         {options}
-                        {/* <option value="fire">Огонь</option>
-                        <option value="water">Вода</option>
-                        <option value="wind">Ветер</option>
-                        <option value="earth">Земля</option> */}
                     </Field>
                 </div>
 

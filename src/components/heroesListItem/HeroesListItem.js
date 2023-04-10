@@ -12,7 +12,7 @@ const HeroesListItem = ({name, text, element, id}) => {
           if (response.ok) {
             dispatch(heroDeleting(id))
           } else {
-            alert('cannot be deleted')
+            alert(`cannot be deleted  ${id}`)
           }
         } catch (error) {
             alert(error)

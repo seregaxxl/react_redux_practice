@@ -1,10 +1,9 @@
-import {useHttp} from '../../hooks/http.hook';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { CSSTransition } from 'react-transition-group';
-import { createSelector } from 'reselect';
+import { createSelector } from '@reduxjs/toolkit';
 
-import { fetchHeroes } from '../../actions';
+import { fetchHeroes } from './heroesSlice';
 import HeroesListItem from "../heroesListItem/HeroesListItem";
 import Spinner from '../spinner/Spinner';
 
@@ -15,7 +14,7 @@ import Spinner from '../spinner/Spinner';
 
 const HeroesList = () => {
     const filteredHeroSelector = createSelector(
-        (state) => state.filters.filters,
+        (state) => state.filters.activeFilter,
         (state) => state.heroes.heroes,
         (filters, heroes) => {
             if (filters === 'all') {
@@ -26,33 +25,21 @@ const HeroesList = () => {
     })
     const filteredHeroes = useSelector(filteredHeroSelector);
 
-    const [show, setShow] = useState([]);
+    const [show, setShow] = useState(false);
     const {heroesLoadingStatus} = useSelector(state => state.heroes);
     const dispatch = useDispatch();
-    const {request} = useHttp();
 
 
 
     useEffect(() => {
-        dispatch(fetchHeroes(request));
+        dispatch(fetchHeroes());
+        setShow(true);
     }, []);
 
     useEffect(() => {
-        setShow(filteredHeroes.map(() => false));
-        let timeoutIds = [];
-        filteredHeroes.forEach((_, i) => {
-            const timeoutId = setTimeout(() => {
-                setShow(show => {
-                    const updatedShow = [...show];
-                    updatedShow[i] = true;
-                    return updatedShow;
-                });
-            }, 500 * i);
-            timeoutIds.push(timeoutId);
-        });
-        return () => {
-            timeoutIds.forEach(timeoutId => clearTimeout(timeoutId));
-        };
+        setTimeout(() => {
+            setShow(true);
+        }, 2000);
     }, [filteredHeroes]);
 
     if (heroesLoadingStatus === "loading") {
@@ -72,11 +59,13 @@ const HeroesList = () => {
             //     setShow(showArr);
             //     }, 1000 * i);
             return (<CSSTransition
-                    classNames="card"
-                    timeout={200}
-                    in={show[i]}
+                    key={id}
+                    classNames="hero"
+                    timeout={500}
+                    appear={true}
+                    in={show}
                     >
-                        <HeroesListItem key={id} {...props} id={id}/>
+                        <HeroesListItem {...props} id={id}/>
                     </CSSTransition> )
         })
     }
