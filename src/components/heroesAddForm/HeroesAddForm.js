@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { heroAdd } from '../../actions';
+import { heroAdd } from '../heroesList/heroesSlice';
 import { Formik, Field, Form } from 'formik';
 import { useState, useEffect } from 'react';
 

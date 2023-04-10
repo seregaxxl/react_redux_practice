@@ -1,6 +1,6 @@
 import './heroesListItem.scss'
-import { useSelector, useDispatch } from 'react-redux';
-import { heroDeleting } from '../../actions';
+import { useDispatch } from 'react-redux';
+import { heroDeleting } from '../heroesList/heroesSlice';
 
 const HeroesListItem = ({name, text, element, id}) => {
     const dispatch = useDispatch();
