@@ -1,4 +1,4 @@
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { heroAdd } from '../heroesList/heroesSlice';
 import { selectAll } from '../heroesFilters/heroesFiltersSlice';
 import { Formik, Field, Form } from 'formik';
@@ -10,11 +10,12 @@ const HeroesAddForm = () => {
     const filters = selectAll(store.getState());
     const dispatch = useDispatch();
     const [options, setOptions] = useState([]);
-
+    const {filtersLoadingStatus} = useSelector(state => state.filters);
+    
     useEffect(() => {
             setOptions(filters.map((item, i) => i === 0 ? null : <option value={item.id}>{item.name}</option>))
 
-    }, [filters]);
+    }, [filters, filtersLoadingStatus]);
 
     const addItem = async (hero) => {
         try {
